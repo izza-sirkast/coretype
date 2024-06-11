@@ -9,6 +9,8 @@ export default function Home() {
   const [salahKetik, setSalahKetik] = useState([]) // Index huruf yang salah ketik
   const [focusDiv, setFocusDiv] = useState(true) // Untuk mentogle fokus typing div
   const [finish, setFinish] = useState(false) // State game apakah selesai atau belum
+  const [timerSec, setTimerSec] = useState(0) // Timer dalam detik
+  const [timer, setTimer] = useState("steady") // status timer
   const typingDivRef = useRef() // Untuk me-ref typing div
 
   const text = "dengan menggunakan semua yang aku di dengan rumah menggunakan hati tanpa kasihan dengan tangan yang semua mati makan melakukan tidak batu sekolah tebal bersih"
@@ -22,6 +24,18 @@ export default function Home() {
 
   // Fungsi untuk menghandle user mengetik
   const handleType = (e) => {
+    // Mulai waktu tepat saat mengetik huruf pertama
+    if(cursorPos == 0 && timerSec == 0){
+      setTimer(t => "start")
+    }
+
+    // Jika pada state finish
+    if(timer == "finish" || timer == "stop"){
+      return
+    }
+
+
+    let currentCursorPos = cursorPos // Variabel posisi kursor untuk menghindari effect react cycle
     if(e.key == " "){  // Handling space
       // Loncat setiap huruf sampai kata selanjutnya
       let cursorPosTemp = cursorPos
@@ -32,6 +46,7 @@ export default function Home() {
         }
         cursorPosTemp++
       setSalahKetik(sk => [...sk, ...salahKetikTemp])
+      currentCursorPos = cursorPosTemp
       setCursorPos(cursorPos => cursorPosTemp)
 
     }else if(e.key == "Backspace"){ // handling backspace
@@ -42,22 +57,26 @@ export default function Home() {
       if(salahKetik.includes(cursorPos - 1)){ // Hapus index salah ketik pada huruf yang dibackspace
         salahKetik.splice(salahKetik.indexOf(cursorPos - 1), 1)
       } 
+      currentCursorPos = cursorPos - 1
       setCursorPos(cursorPos => cursorPos - 1)
 
     }else if(e.key !=  textArr[cursorPos]){ // handling salah ketik
       setSalahKetik(sk => [...sk, cursorPos])
+      currentCursorPos = cursorPos + 1
       setCursorPos(cp => cp + 1)
     
     }else{ // handling anything else
+      currentCursorPos = cursorPos + 1
       setCursorPos(cp => cp + 1)
     }
 
 
     // Jika sudah finish
-    if(cursorPos + 1 >= textArr.length){
-      console.log(finish)
+    if(currentCursorPos >= textArr.length){
       setCursorPos(cp => 999999999)
       setFinish(f => true)
+      setTimer(t => "stop")
+
     }
   }
 
@@ -67,13 +86,35 @@ export default function Home() {
     setCursorPos(cp => 0)
     setSalahKetik(sk => [])
     setFocusDiv(fd => true)
+    setTimer(t => "restart")
   }
+
+  // Timer regulation
+  useEffect(() => {
+    let interval;
+    if(timer == "start"){
+      interval = setInterval(() => {
+        setTimerSec(ts => ts + 1)
+      }, 1000)
+    }else if(timer == "stop"){
+      clearInterval(interval)
+    }else if(timer == "restart"){
+      setTimerSec(ts => 0)
+      setTimer(t => "steady")
+    }
+
+    return () => clearInterval(interval)
+  }, [timer])
 
   // Menghitung kecepatan mengetik dalam wpm (words per minute)
   // todo
   const calculateWPM = () => {
-    const everyWords = text.split(" ")
-    return 72
+    // gross wpm = (all typed letters / 5) / time 
+    // net wpm = gross wpm  -  (uncorrected errors / time)
+    const timeMin = timerSec / 60
+    const grossWpm = (textArr.length / 5) / timeMin
+    let netWpm = Math.max(0, Math.ceil(grossWpm - (salahKetik.length / timeMin)));
+    return netWpm
   }
 
 
@@ -135,8 +176,11 @@ export default function Home() {
    <div className="block max-w-3xl mx-auto mt-10">
 
     <div className="flex mb-2 items-center">
-      {finish && resultCard}
-      <MdOutlineRestartAlt className="border border-black rounded-md text-5xl hover:cursor-pointer hover:bg-slate-200" onClick={restartTest}></MdOutlineRestartAlt>
+      <MdOutlineRestartAlt className="border border-black rounded-md text-5xl hover:cursor-pointer hover:bg-slate-200 mr-2" onClick={restartTest}></MdOutlineRestartAlt>
+      
+      <div className="text-xl px-3 py-2 border border-black rounded-md">
+        {timerSec}
+      </div>
     </div>
 
     <div 
@@ -144,9 +188,14 @@ export default function Home() {
       tabIndex="0"  
       onKeyDown={handleType} 
       onClick={handleClick} 
-      className={`border-black rounded-md px-3 py-2 ${focusDiv ? "border-2" : "border"}`}>
+      className={`${focusDiv ? "border-2" : "border"} border-black mb-2 rounded-md px-3 py-2 `}>
       {progressText}
     </div>
+
+    <div className="">
+      {finish && resultCard}
+    </div>
+
 
    </div>
   );
