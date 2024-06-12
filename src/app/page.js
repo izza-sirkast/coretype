@@ -3,10 +3,14 @@
 import { useEffect, useRef, useState } from "react"
 import { MdOutlineRestartAlt } from "react-icons/md";
 
+// Local library
+import { calculateWPM, generateProgressText } from "@/library/functionality";
+
 export default function Home() {
   // ------------------------------- STATES // VARIABLES DEFINITION -------------------------------
   const [cursorPos, setCursorPos] = useState(0)  // Posisi kursor untuk saat ini
   const [salahKetik, setSalahKetik] = useState([]) // Index huruf yang salah ketik
+  const [salahKetikKelebihan, setSalahKetikKelebihan] = useState({count:0}) // Menyetor index salah ketik kelebihan huruf, seperti "tinggal" diketik jadi "tinggalp", nilai akan setor objek {index_p, "p"}
   const [focusDiv, setFocusDiv] = useState(true) // Untuk mentogle fokus typing div
   const [finish, setFinish] = useState(false) // State game apakah selesai atau belum
   const [timerSec, setTimerSec] = useState(0) // Timer dalam detik
@@ -34,6 +38,31 @@ export default function Home() {
       return
     }
 
+    // Jika salah ketik pada tempat yang harusnya spasi
+    if(textArr[cursorPos] == " " && e.key != " " && e.key != "Backspace"){
+      if(!(/^[a-z0-9]+$/i.test(e.key)) || e.key.length > 1){
+        setSalahKetikKelebihan(sk => {
+          let newSKK = {...sk}
+          newSKK["count"] += 1
+          return newSKK
+        })
+        return
+      }
+
+      setSalahKetikKelebihan(sk => {
+        let newSKK = {...sk}
+
+        if(cursorPos in sk){
+          newSKK[cursorPos] += e.key
+        }else{
+          newSKK[cursorPos] = e.key
+        }
+
+        newSKK["count"] += 1
+        return newSKK
+      })
+      return 
+    }
 
     let currentCursorPos = cursorPos // Variabel posisi kursor untuk menghindari effect react cycle
     if(e.key == " "){  // Handling space
@@ -54,7 +83,19 @@ export default function Home() {
         return
       }
 
-      if(salahKetik.includes(cursorPos - 1)){ // Hapus index salah ketik pada huruf yang dibackspace
+      if(cursorPos in salahKetikKelebihan){ // Jika pada salah ketik kelebihan
+        setSalahKetikKelebihan(sk => {
+          let newSKK = {...sk}
+          let sequence = newSKK[cursorPos].split("")
+          sequence.pop()
+          newSKK[cursorPos] = sequence.join("")
+          if(sequence.length < 1){
+            delete newSKK[cursorPos]
+          }
+          return newSKK
+        })
+        return
+      }else if(salahKetik.includes(cursorPos - 1)){ // Hapus index salah ketik pada huruf yang dibackspace
         salahKetik.splice(salahKetik.indexOf(cursorPos - 1), 1)
       } 
       currentCursorPos = cursorPos - 1
@@ -76,15 +117,14 @@ export default function Home() {
       setCursorPos(cp => 999999999)
       setFinish(f => true)
       setTimer(t => "stop")
-
     }
   }
-
   // Restart test
   const restartTest = () => {
     setFinish(f => false)
     setCursorPos(cp => 0)
     setSalahKetik(sk => [])
+    setSalahKetikKelebihan(skk => {return {count:0}})
     setFocusDiv(fd => true)
     setTimer(t => "restart")
   }
@@ -105,17 +145,6 @@ export default function Home() {
 
     return () => clearInterval(interval)
   }, [timer])
-
-  // Menghitung kecepatan mengetik dalam wpm (words per minute)
-  // todo
-  const calculateWPM = () => {
-    // gross wpm = (all typed letters / 5) / time 
-    // net wpm = gross wpm  -  (uncorrected errors / time)
-    const timeMin = timerSec / 60
-    const grossWpm = (textArr.length / 5) / timeMin
-    let netWpm = Math.max(0, Math.ceil(grossWpm - (salahKetik.length / timeMin)));
-    return netWpm
-  }
 
 
 
@@ -152,25 +181,15 @@ export default function Home() {
   // ------------------------------- COMPONENTS // RENDER VARIABLES -------------------------------
 
   // Merender text sesuai dengan action user dan kondisi text sebelumnya
-  let progressText = text.split("").map((letter, i) => {
-    if(i == cursorPos){
-      if(salahKetik.includes(i)){
-        return <span>{cursor}<span className="text-red-500">{letter}</span></span>
-      }
-      return <span>{cursor}<span>{letter}</span></span>
-    }else{
-      if(salahKetik.includes(i)){
-        return <span className="text-red-500">{letter}</span>
-      }
-      return <span>{letter}</span>
-    }
-  })
+  let progressText = generateProgressText(text, cursorPos, salahKetik, cursor, salahKetikKelebihan) // fungsi dari library/functionality
 
-  // Result card
+
+  // Result card, mengambil hasil wpm dengan fungsi calculateWPM dari library/functionality
   let resultCard;
   if(finish){
-    resultCard = <div className="text-xl px-3 py-2 mr-2 border border-black rounded-md w-28">{calculateWPM()} WPM</div>;
+    resultCard = <div className="text-xl px-3 py-2 mr-2 border border-black rounded-md w-28">{calculateWPM(timerSec, textArr, salahKetik, salahKetikKelebihan)} WPM</div>;
   }
+
 
   return (
    <div className="block max-w-3xl mx-auto mt-10">
@@ -188,7 +207,7 @@ export default function Home() {
       tabIndex="0"  
       onKeyDown={handleType} 
       onClick={handleClick} 
-      className={`${focusDiv ? "border-2" : "border"} border-black mb-2 rounded-md px-3 py-2 `}>
+      className={`${focusDiv ? "border-2" : "border"} border-black mb-2 rounded-md px-3 py-2 select-none`}>
       {progressText}
     </div>
 
