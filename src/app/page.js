@@ -10,6 +10,8 @@ import { calculateWPM } from "@/library/functionality";
 // Local components
 import TypingTestBox from "@/components/TypingTestBox";
 import RestartButton from "@/components/buttons/RestartButton";
+import ChooseLanguage from "@/components/buttons/ChooseLanguage";
+import ChooseDifficulty from "@/components/buttons/ChooseDifficulty";
 
 export default function Home() {
   // ------------------------------- STATES // VARIABLES DEFINITION -------------------------------
@@ -20,6 +22,8 @@ export default function Home() {
   const [finish, setFinish] = useState(false) // State game apakah selesai atau belum
   const [timerSec, setTimerSec] = useState(0) // Timer dalam detik
   const [timer, setTimer] = useState("steady") // status timer
+  const [language, setLanguage] = useState("Indonesia")
+  const [difficulty, setDifficulty] = useState("Easy")
   const typingDivRef = useRef() // Untuk me-ref typing div
 
   const text = "dengan menggunakan semua yang aku di dengan rumah menggunakan hati tanpa kasihan dengan tangan yang semua mati makan melakukan tidak batu sekolah tebal bersih"
@@ -69,14 +73,19 @@ export default function Home() {
 
 
   return (
-   <div className="block max-w-3xl mx-auto mt-10">
+   <div className="max-w-3xl mx-auto mt-10">
 
-    <div className="flex mb-2 items-center">
+    <div className="flex items-center *:mr-2 mb-2">
       <RestartButton setCursorPos={setCursorPos} setFinish={setFinish} setSalahKetik={setSalahKetik} setFocusDiv={setFocusDiv} setSalahKetikKelebihan={setSalahKetikKelebihan} setTimer={setTimer} />
       
       <div className="text-xl px-3 py-2 border border-black rounded-md">
         {timerSec}
       </div>
+      
+      <ChooseLanguage language={language} setLanguage={setLanguage} />
+      
+      <ChooseDifficulty difficulty={difficulty} setDifficulty={setDifficulty} />
+
     </div>
 
     <TypingTestBox typingDivRef={typingDivRef} cursorPos={cursorPos} setCursorPos={setCursorPos} salahKetik={salahKetik} setSalahKetik={setSalahKetik} salahKetikKelebihan={salahKetikKelebihan} setSalahKetikKelebihan={setSalahKetikKelebihan} focusDiv={focusDiv} setFocusDiv={setFocusDiv} finish={finish} setFinish={setFinish} timerSec={timerSec} setTimerSec={setTimerSec} timer={timer} setTimer={setTimer} text={text} />
