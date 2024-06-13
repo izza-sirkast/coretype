@@ -1,11 +1,10 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { MdOutlineRestartAlt } from "react-icons/md";
-import ID_Easy from "@/assets/vocab/ID_Easy.json"
 
 // Local library
 import { calculateWPM } from "@/library/functionality";
+import { getWords1000 } from "@/library/textProvider";
 
 // Local components
 import TypingTestBox from "@/components/TypingTestBox";
@@ -15,6 +14,7 @@ import ChooseDifficulty from "@/components/buttons/ChooseDifficulty";
 
 export default function Home() {
   // ------------------------------- STATES // VARIABLES DEFINITION -------------------------------
+  const [text, setText] = useState("")
   const [cursorPos, setCursorPos] = useState(0)  // Posisi kursor untuk saat ini
   const [salahKetik, setSalahKetik] = useState([]) // Index huruf yang salah ketik
   const [salahKetikKelebihan, setSalahKetikKelebihan] = useState({count:0}) // Menyetor index salah ketik kelebihan huruf, seperti "tinggal" diketik jadi "tinggalp", nilai akan setor objek {index_p, "p"}
@@ -26,8 +26,14 @@ export default function Home() {
   const [difficulty, setDifficulty] = useState("Easy")
   const typingDivRef = useRef() // Untuk me-ref typing div
 
-  const text = "dengan menggunakan semua yang aku di dengan rumah menggunakan hati tanpa kasihan dengan tangan yang semua mati makan melakukan tidak batu sekolah tebal bersih"
-  const textArr = text.split("")
+  // Menyiapkan text dari file json
+  useEffect(() => {
+    getWords1000(setText, language, difficulty)
+  }, [])
+
+  useEffect(() => {
+    getWords1000(setText, language, difficulty)
+  }, [language, difficulty])
 
   // Timer regulation
   useEffect(() => {
@@ -88,7 +94,7 @@ export default function Home() {
 
     </div>
 
-    <TypingTestBox typingDivRef={typingDivRef} cursorPos={cursorPos} setCursorPos={setCursorPos} salahKetik={salahKetik} setSalahKetik={setSalahKetik} salahKetikKelebihan={salahKetikKelebihan} setSalahKetikKelebihan={setSalahKetikKelebihan} focusDiv={focusDiv} setFocusDiv={setFocusDiv} finish={finish} setFinish={setFinish} timerSec={timerSec} setTimerSec={setTimerSec} timer={timer} setTimer={setTimer} text={text} />
+    <TypingTestBox cursorPos={cursorPos} setCursorPos={setCursorPos} salahKetik={salahKetik} setSalahKetik={setSalahKetik} salahKetikKelebihan={salahKetikKelebihan} setSalahKetikKelebihan={setSalahKetikKelebihan} focusDiv={focusDiv} setFocusDiv={setFocusDiv} finish={finish} setFinish={setFinish} timerSec={timerSec} setTimerSec={setTimerSec} timer={timer} setTimer={setTimer} text={text} ref={typingDivRef} />
 
     <div className="">
       {finish && resultCard}

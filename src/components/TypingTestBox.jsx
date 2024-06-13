@@ -2,8 +2,8 @@ import React, {useEffect} from 'react'
 
 import { generateProgressText } from '@/library/functionality'
 
-const TypingTestBox = React.forwardRef(({cursorPos, setCursorPos, salahKetik, setSalahKetik, salahKetikKelebihan, setSalahKetikKelebihan, focusDiv, setFocusDiv, finish, setFinish, timerSec, setTimerSec, timer, setTimer, text, typingDivRef}) => {
-
+const TypingTestBox = React.forwardRef((props, ref) => {
+    const {cursorPos, setCursorPos, salahKetik, setSalahKetik, salahKetikKelebihan, setSalahKetikKelebihan, focusDiv, setFocusDiv, finish, setFinish, timerSec, setTimerSec, timer, setTimer, text} = props
     const textArr = text.split("")
 
     // Animasi cursor
@@ -108,9 +108,9 @@ const TypingTestBox = React.forwardRef(({cursorPos, setCursorPos, salahKetik, se
 
     useEffect(() => {
         if(focusDiv){
-            typingDivRef.current.focus()
+            ref.current.focus()
         }else{
-            typingDivRef.current.blur()
+            ref.current.blur()
         }
     }, [focusDiv])
 
@@ -119,7 +119,7 @@ const TypingTestBox = React.forwardRef(({cursorPos, setCursorPos, salahKetik, se
 
   return (
     <div 
-      ref={typingDivRef}
+      ref={ref}
       tabIndex="0"  
       onKeyDown={handleType} 
       onClick={handleClick} 
