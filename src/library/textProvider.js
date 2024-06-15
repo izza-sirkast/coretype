@@ -40,9 +40,12 @@ export const getWords1000 = (setText, language, difficulty) => {
 
 export const getRandomWords1000 = (langData) => {
     let words = ""
+    console.log(langData.words[3].length)
     for(let i = 0; i < 1000; i++){
         let randIdx = Math.ceil(Math.random() * langData.words.length)
-        words += langData.words[randIdx] + " "
+        if(langData.words[randIdx]?.length <= 10){
+          words += langData.words[randIdx] + " "
+        }
     }
     return words
 }

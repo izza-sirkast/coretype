@@ -7,7 +7,7 @@ const TypingTestBox = React.forwardRef((props, ref) => {
     const textArr = text.split("")
 
     // Animasi cursor
-    const cursor = <span className={`absolute mt-1 h-6 border-l-2 border-white animate-pulsate ${(!focusDiv || finish) && "hidden"}`}></span>
+    const cursor = <span className={`absolute mt-1 h-6 border-l-2 border-white animate-pulsate ${(!focusDiv || finish) && "hidden"} ${!focusDiv}`}></span>
 
     const handleType = (e) => {
         // Mulai waktu tepat saat mengetik huruf pertama
@@ -94,12 +94,6 @@ const TypingTestBox = React.forwardRef((props, ref) => {
           setCursorPos(cp => cp + 1)
         }
     
-    
-        // Jika sudah finish
-        // if(timerSec <= 0){
-        //   setFinish(f => true)
-        //   setTimer(t => "stop")
-        // }
       }
 
       if(ref.current){
@@ -120,7 +114,8 @@ const TypingTestBox = React.forwardRef((props, ref) => {
     }, [focusDiv])
 
     // Merender text sesuai dengan action user dan kondisi text sebelumnya
-    let progressText = generateProgressText(text, cursorPos, salahKetik, cursor, salahKetikKelebihan) // fungsi dari library/functionality
+    let containerWidth = ref.current ? ref.current.offsetWidth : 50 
+    let progressText = generateProgressText(text, cursorPos, salahKetik, cursor, salahKetikKelebihan, containerWidth) // fungsi dari library/functionality
 
   return (
     <div 
@@ -128,7 +123,7 @@ const TypingTestBox = React.forwardRef((props, ref) => {
       tabIndex="0"  
       onKeyDown={handleType} 
       onClick={handleClick} 
-      className={`h-48 max-h-48 overflow-y-hidden overflow-hidden text-2xl outline-none rounded-2xl px-8 py-5 select-none text-white bg-slate-300 bg-opacity-10 w-3/5 mx-auto`}>
+      className={`overflow-y-hidden overflow-hidden text-2xl outline-none rounded-2xl px-8 py-4 select-none text-white bg-slate-300 bg-opacity-10 testcontainer-length mx-auto`}>
       {progressText}
     </div>
   )

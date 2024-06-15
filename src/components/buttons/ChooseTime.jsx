@@ -23,11 +23,11 @@ function ChooseTime({timeMode, setTimeMode, timer}) {
   return (
     <div className=''>
         <div className={`text-xl px-3 py-2 border border-white text-white rounded-md ${timer != "start" ? "hover:bg-white hover:bg-opacity-20 hover:cursor-pointer" : "bg-white bg-opacity-30"} select-none`} onClick={() => handleClickOpenOptions()}>
-            {timeMode}
+            {timeMode} Seconds
         </div>
 
         {openOptions &&
-        <div className='absolute py-1 bg-white border border-black mt-1 rounded-md w-28'>
+        <div className='absolute py-1 bg-white border border-black mt-1 rounded-md w-32'>
 
             <button 
                 className={`hover:bg-slate-400 px-2 w-full text-left rounded-md ${timeMode == "15" && "bg-slate-400"}`} onClick={() => handleClick("15")}>

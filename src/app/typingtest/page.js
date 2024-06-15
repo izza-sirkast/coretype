@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react"
 
 // Local library
-import { calculateWPM } from "@/library/functionality";
 import { getWords1000 } from "@/library/textProvider";
 
 // Local components
@@ -45,7 +44,6 @@ export default function TypingTest() {
     if(timer == "start"){
       interval = setInterval(() => {
         setTimerSec(ts => ts - 1)
-        console.log(timerSec)
       }, 1000)
     }else if(timer == "stop"){
       clearInterval(interval)
@@ -88,7 +86,6 @@ export default function TypingTest() {
 
   // ------------------------------- COMPONENTS // RENDER VARIABLES -------------------------------
   // Result card, mengambil hasil wpm dengan fungsi calculateWPM dari library/functionality
-  console.log(finish, timerSec)
   if(finish){
     return <FinishPage timeMode={timeMode} cursorPos={cursorPos} salahKetik={salahKetik} salahKetikKelebihan={salahKetikKelebihan} setFinish={setFinish} setCursorPos={setCursorPos} setSalahKetik={setSalahKetik} setSalahKetikKelebihan={setSalahKetikKelebihan} setFocusDiv={setFocusDiv} setTimer={setTimer}/>
   }
@@ -97,18 +94,22 @@ export default function TypingTest() {
    <div className="w-full max-h-screen min-h-screen gradient-bg">
     <NavBar />
 
-    <div className="flex items-center *:mr-4 mx-auto w-3/5 mt-20 mb-8">
-      <RestartButton setCursorPos={setCursorPos} setFinish={setFinish} setSalahKetik={setSalahKetik} setFocusDiv={setFocusDiv} setSalahKetikKelebihan={setSalahKetikKelebihan} setTimer={setTimer} />
-      
-      <div className="text-xl px-3 py-2 border border-white text-white rounded-md">
-        {timerSec}
+    <div className="flex items-center mx-auto option-container-width mt-20 mb-5 px-2 justify-between">
+      <div className="flex *:mr-3">
+        <RestartButton setCursorPos={setCursorPos} setFinish={setFinish} setSalahKetik={setSalahKetik} setFocusDiv={setFocusDiv} setSalahKetikKelebihan={setSalahKetikKelebihan} setTimer={setTimer} />
+        
+        <div className="text-xl px-3 py-2 border border-white text-white rounded-md">
+          {timerSec}
+        </div>
       </div>
       
-      <ChooseLanguage language={language} setLanguage={setLanguage} timer={timer} />
-      
-      <ChooseDifficulty difficulty={difficulty} setDifficulty={setDifficulty} timer={timer} />
+      <div className="flex *:ml-3">
+        <ChooseLanguage language={language} setLanguage={setLanguage} timer={timer} />
+        
+        <ChooseDifficulty difficulty={difficulty} setDifficulty={setDifficulty} timer={timer} />
 
-      <ChooseTime timeMode={timeMode} setTimeMode={setTimeMode} timer={timer} />
+        <ChooseTime timeMode={timeMode} setTimeMode={setTimeMode} timer={timer} />
+      </div>
 
     </div>
 

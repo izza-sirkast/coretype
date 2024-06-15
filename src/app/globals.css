@@ -25,3 +25,12 @@
 .text-light-blue{
     color: #126BF9;
 }
+
+.testcontainer-length{
+    width: 680px;
+    height: 200px;
+}
+
+.option-container-width{
+    width: 680px;
+}
