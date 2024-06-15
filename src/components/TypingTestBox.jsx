@@ -2,16 +2,17 @@ import React, {useEffect} from 'react'
 
 import { generateProgressText } from '@/library/functionality'
 
-const TypingTestBox = React.forwardRef(({cursorPos, setCursorPos, salahKetik, setSalahKetik, salahKetikKelebihan, setSalahKetikKelebihan, focusDiv, setFocusDiv, finish, setFinish, timerSec, setTimerSec, timer, setTimer, text, typingDivRef}) => {
-
+const TypingTestBox = React.forwardRef((props, ref) => {
+    const {cursorPos, setCursorPos, salahKetik, setSalahKetik, salahKetikKelebihan, setSalahKetikKelebihan, focusDiv, setFocusDiv, finish, setFinish, timerSec, setTimerSec, timer, setTimer, text, timeMode} = props
     const textArr = text.split("")
 
     // Animasi cursor
-    const cursor = <span className={`absolute w-1 h-5 border-l border-black animate-pulsate ${(!focusDiv || finish) && "hidden"}`}></span>
+    const cursor = <span className={`absolute mt-1 h-6 border-l-2 border-white animate-pulsate ${(!focusDiv || finish) && "hidden"}`}></span>
 
     const handleType = (e) => {
         // Mulai waktu tepat saat mengetik huruf pertama
-        if(cursorPos == 0 && timerSec == 0){
+        if(cursorPos == 0 && timerSec == parseInt(timeMode)){
+          console.log("tes")
           setTimer(t => "start")
         }
     
@@ -95,11 +96,15 @@ const TypingTestBox = React.forwardRef(({cursorPos, setCursorPos, salahKetik, se
     
     
         // Jika sudah finish
-        if(currentCursorPos >= textArr.length){
-          setCursorPos(cp => 999999999)
-          setFinish(f => true)
-          setTimer(t => "stop")
-        }
+        // if(timerSec <= 0){
+        //   setFinish(f => true)
+        //   setTimer(t => "stop")
+        // }
+      }
+
+      if(ref.current){
+        // console.log(ref.current.offsetWidth)
+
       }
 
     const handleClick = (e) => {
@@ -108,9 +113,9 @@ const TypingTestBox = React.forwardRef(({cursorPos, setCursorPos, salahKetik, se
 
     useEffect(() => {
         if(focusDiv){
-            typingDivRef.current.focus()
+            ref.current.focus()
         }else{
-            typingDivRef.current.blur()
+            ref.current.blur()
         }
     }, [focusDiv])
 
@@ -119,11 +124,11 @@ const TypingTestBox = React.forwardRef(({cursorPos, setCursorPos, salahKetik, se
 
   return (
     <div 
-      ref={typingDivRef}
+      ref={ref}
       tabIndex="0"  
       onKeyDown={handleType} 
       onClick={handleClick} 
-      className={`${focusDiv ? "border-2" : "border"} border-black mb-2 rounded-md px-3 py-2 select-none`}>
+      className={`h-48 max-h-48 overflow-y-hidden overflow-hidden text-2xl outline-none rounded-2xl px-8 py-5 select-none text-white bg-slate-300 bg-opacity-10 w-3/5 mx-auto`}>
       {progressText}
     </div>
   )
