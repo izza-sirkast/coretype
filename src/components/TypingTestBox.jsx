@@ -3,16 +3,15 @@ import React, {useEffect} from 'react'
 import { generateProgressText } from '@/library/functionality'
 
 const TypingTestBox = React.forwardRef((props, ref) => {
-    const {cursorPos, setCursorPos, salahKetik, setSalahKetik, salahKetikKelebihan, setSalahKetikKelebihan, focusDiv, setFocusDiv, finish, setFinish, timerSec, setTimerSec, timer, setTimer, text, timeMode} = props
+    const {cursorPos, setCursorPos, salahKetik, setSalahKetik, salahKetikKelebihan, setSalahKetikKelebihan, focusDiv, setFocusDiv, finish, setFinish, timerSec, setTimerSec, timer, setTimer, text, timeMode, setSalahKetikSemuaCount} = props
     const textArr = text.split("")
 
     // Animasi cursor
-    const cursor = <span className={`absolute mt-1 h-6 border-l-2 border-white animate-pulsate ${(!focusDiv || finish) && "hidden"}`}></span>
+    const cursor = <span className={`absolute mt-1 h-6 border-l-2 border-white animate-pulsate ${(!focusDiv || finish) && "hidden"} ${!focusDiv}`}></span>
 
     const handleType = (e) => {
         // Mulai waktu tepat saat mengetik huruf pertama
         if(cursorPos == 0 && timerSec == parseInt(timeMode)){
-          console.log("tes")
           setTimer(t => "start")
         }
     
@@ -52,12 +51,15 @@ const TypingTestBox = React.forwardRef((props, ref) => {
           // Loncat setiap huruf sampai kata selanjutnya
           let cursorPosTemp = cursorPos
           let salahKetikTemp = []
+          let letterCount = 0
           while(textArr[cursorPosTemp] != " " && cursorPosTemp < textArr.length){
             salahKetikTemp.push(cursorPosTemp)
             cursorPosTemp++
-            }
-            cursorPosTemp++
+            letterCount++
+          }
+          cursorPosTemp++
           setSalahKetik(sk => [...sk, ...salahKetikTemp])
+          setSalahKetikSemuaCount(skc => skc + letterCount)
           currentCursorPos = cursorPosTemp
           setCursorPos(cursorPos => cursorPosTemp)
     
@@ -85,7 +87,11 @@ const TypingTestBox = React.forwardRef((props, ref) => {
           setCursorPos(cursorPos => cursorPos - 1)
     
         }else if(e.key !=  textArr[cursorPos]){ // handling salah ketik
+          if(e.key.length > 1){
+            return
+          }
           setSalahKetik(sk => [...sk, cursorPos])
+          setSalahKetikSemuaCount(skc => skc + 1)
           currentCursorPos = cursorPos + 1
           setCursorPos(cp => cp + 1)
         
@@ -94,12 +100,6 @@ const TypingTestBox = React.forwardRef((props, ref) => {
           setCursorPos(cp => cp + 1)
         }
     
-    
-        // Jika sudah finish
-        // if(timerSec <= 0){
-        //   setFinish(f => true)
-        //   setTimer(t => "stop")
-        // }
       }
 
       if(ref.current){
@@ -120,7 +120,8 @@ const TypingTestBox = React.forwardRef((props, ref) => {
     }, [focusDiv])
 
     // Merender text sesuai dengan action user dan kondisi text sebelumnya
-    let progressText = generateProgressText(text, cursorPos, salahKetik, cursor, salahKetikKelebihan) // fungsi dari library/functionality
+    let containerWidth = ref.current ? ref.current.offsetWidth : 50 
+    let progressText = generateProgressText(text, cursorPos, salahKetik, cursor, salahKetikKelebihan, containerWidth) // fungsi dari library/functionality
 
   return (
     <div 
@@ -128,7 +129,7 @@ const TypingTestBox = React.forwardRef((props, ref) => {
       tabIndex="0"  
       onKeyDown={handleType} 
       onClick={handleClick} 
-      className={`h-48 max-h-48 overflow-y-hidden overflow-hidden text-2xl outline-none rounded-2xl px-8 py-5 select-none text-white bg-slate-300 bg-opacity-10 w-3/5 mx-auto`}>
+      className={`overflow-y-hidden overflow-hidden text-2xl outline-none rounded-2xl px-8 py-4 select-none text-white bg-slate-300 bg-opacity-10 testcontainer-length mx-auto`}>
       {progressText}
     </div>
   )
