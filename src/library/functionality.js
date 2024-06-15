@@ -1,14 +1,54 @@
+export const calculateGrossWPM = (timeMode, cursorPos, salahKetikKelebihan) => {
+    const timeMin = timeMode / 60
+    const grossWpm = Math.round(((cursorPos + salahKetikKelebihan["count"]) / 4.5) / timeMin)
+    return grossWpm
+}
+
 // Menghitung wpm dari lama waktu mengetik
 export const calculateWPM = (timeMode, cursorPos, salahKetik, salahKetikKelebihan) => {
     // gross wpm = (all typed letters / 4.7) / time 
     // net wpm = gross wpm  -  (uncorrected errors / time)
     const timeMin = timeMode / 60
-    console.log(timeMin, cursorPos, salahKetik, salahKetikKelebihan)
     const grossWpm = ((cursorPos + salahKetikKelebihan["count"]) / 4.5) / timeMin
     const totalSalahKetik = salahKetik.length + salahKetikKelebihan["count"]
-    let netWpm = Math.max(0, Math.ceil(grossWpm - (totalSalahKetik / timeMin)));
+    let netWpm = Math.round(Math.max(0, Math.ceil(grossWpm - (totalSalahKetik / timeMin))))
     return netWpm
+  }
 
+
+export const calculateAccuracy = (cursorPos, salahKetikSemua, salahKetikKelebihan) => {
+    // cursorPos - salahKetik - salahKetikKelebihan
+    console.log(cursorPos, salahKetikSemua, salahKetikKelebihan["count"])
+    const accuracy = Math.round(((cursorPos - salahKetikSemua - salahKetikKelebihan["count"]) / cursorPos) * 100)
+    return accuracy
+}
+
+export const updateStats = (timeMode, timerSec, cursorPos, salahKetik, salahKetikKelebihan, statsOverTime, setStatsOverTime) => {
+    let factor;
+    switch(timeMode){
+      case "15":
+        factor = 1;
+        break;
+      case "30":
+        factor = 1
+        break;
+      case "60":
+        factor = 2
+        break;
+      case "120":
+        factor = 4
+        break;
+    }
+
+    let countUp = parseInt(timeMode) - timerSec
+    if((countUp % factor) == 0){
+      const wpm = calculateWPM(countUp, cursorPos ,salahKetik, salahKetikKelebihan)
+      const grossWpm = calculateGrossWPM(countUp, cursorPos, salahKetikKelebihan)
+      if(statsOverTime.at(-1)[0] != countUp && wpm != NaN && countUp != 0){
+        setStatsOverTime(sts => [...sts, [countUp, wpm, grossWpm]])
+      }
+      console.log(statsOverTime)
+    }
   }
 
 
