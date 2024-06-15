@@ -15,7 +15,7 @@ function RestartButton({setFinish, setCursorPos, setSalahKetik, setSalahKetikKel
 
 
   return (
-    <MdOutlineRestartAlt className="border border-black rounded-md text-5xl hover:cursor-pointer hover:bg-slate-200 mr-2" onClick={restartTest}></MdOutlineRestartAlt>
+    <MdOutlineRestartAlt className="border border-white text-white rounded-md text-5xl hover:cursor-pointer hover:bg-white hover:bg-opacity-20 transition-all ease-in mr-2" onClick={restartTest}></MdOutlineRestartAlt>
   )
 }
 

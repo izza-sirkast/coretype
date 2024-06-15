@@ -1,12 +1,13 @@
 // Menghitung wpm dari lama waktu mengetik
-export const calculateWPM = (timerSec, textArr, salahKetik, salahKetikKelebihan) => {
+export const calculateWPM = (timeMode, cursorPos, salahKetik, salahKetikKelebihan) => {
     // gross wpm = (all typed letters / 4.7) / time 
     // net wpm = gross wpm  -  (uncorrected errors / time)
-    const timeMin = timerSec / 60
-    const grossWpm = (textArr.length / 4.7) / timeMin
+    const timeMin = timeMode / 60
+    const grossWpm = (cursorPos / 4.7) / timeMin
     const totalSalahKetik = salahKetik.length + salahKetikKelebihan["count"]
     let netWpm = Math.max(0, Math.ceil(grossWpm - (totalSalahKetik / timeMin)));
     return netWpm
+
   }
 
 
@@ -27,7 +28,7 @@ export const generateProgressText = (text, cursorPos, salahKetik, cursor, salahK
                 if(salahKetik.includes(i)){
                     formattedSection.push(<span key={i-0.3} className="text-red-500">{letter}</span>)
                 }else{
-                    formattedSection.push(<span key={i-0.3} className={`${i < cursorPos && "text-green-700"}`}>{letter}</span>)
+                    formattedSection.push(<span key={i-0.3} className={`${i < cursorPos && "text-light-blue"}`}>{letter}</span>)
                 }
                 
 
