@@ -74,7 +74,6 @@ function FinishPage({
     salahKetikSemuaCount,
     salahKetikKelebihan
   );
-  console.log(statsOverTime);
   return (
     <div className="w-full max-h-screen min-h-screen home-gradient">
       <NavBar />

@@ -12,6 +12,7 @@ import RestartButton from "@/components/buttons/RestartButton";
 import ChooseLanguage from "@/components/buttons/ChooseLanguage";
 import ChooseDifficulty from "@/components/buttons/ChooseDifficulty";
 import ChooseTime from "@/components/buttons/ChooseTime";
+import ChooseTypingSound from "@/components/buttons/ChooseTypingSound";
 import NavBar from "@/components/NavBar";
 import FinishPage from "@/components/FinishPage";
 import { updateStats } from "@/library/functionality";
@@ -31,6 +32,7 @@ export default function TypingTest() {
   const [language, setLanguage] = useState("Indonesia");
   const [difficulty, setDifficulty] = useState("Easy");
   const [timeMode, setTimeMode] = useState("30");
+  const [typingSound, setTypingSound] = useState("Mechanical")
   const typingDivRef = useRef(); // Untuk me-ref typing div
 
   // Menyiapkan text dari file json
@@ -127,7 +129,7 @@ export default function TypingTest() {
     <div className="w-full max-h-screen min-h-screen home-gradient">
       <NavBar />
 
-      <div className="flex items-center mx-auto option-container-width mt-20 mb-5 px-2 justify-between">
+      <div className="flex items-center mx-auto option-container-width mt-16 mb-5 px-2 justify-between">
         <div className="flex *:mr-3">
           <RestartButton
             size={"5"}
@@ -184,18 +186,19 @@ export default function TypingTest() {
         focusDiv={focusDiv}
         setFocusDiv={setFocusDiv}
         finish={finish}
-        setFinish={setFinish}
         timerSec={timerSec}
-        setTimerSec={setTimerSec}
         timer={timer}
         setTimer={setTimer}
         text={text}
         ref={typingDivRef}
         timeMode={timeMode}
         setSalahKetikSemuaCount={setSalahKetikSemuaCount}
+        typingSound={typingSound}
       />
 
-      <div className="">{finish && resultCard}</div>
+      <div className="flex items-center mx-auto option-container-width mt-5 px-2 justify-between">
+            <ChooseTypingSound typingSound={typingSound} setTypingSound={setTypingSound} timer={timer} />
+      </div>
     </div>
   );
 }
