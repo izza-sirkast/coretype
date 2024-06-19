@@ -2,8 +2,10 @@ import React, { useEffect, useRef } from "react";
 
 import { generateProgressText } from "@/library/functionality";
 import cherryBlue from "@/assets/sound/cherryBlue.wav";
-// import keyboardSound from "@/assets/sound/keyboard.wav";
-// import typeSoft from "@/assets/sound/typeSoft.wav";
+import keyboardSound from "@/assets/sound/keyboard.wav";
+import typeSoft from "@/assets/sound/typeSoft.wav";
+import augh from "@/assets/sound/augh.wav";
+import ugh from "@/assets/sound/ugh.wav";
 
 const TypingTestBox = React.forwardRef((props, ref) => {
   const {
@@ -16,14 +18,13 @@ const TypingTestBox = React.forwardRef((props, ref) => {
     focusDiv,
     setFocusDiv,
     finish,
-    setFinish,
     timerSec,
-    setTimerSec,
     timer,
     setTimer,
     text,
     timeMode,
     setSalahKetikSemuaCount,
+    typingSound
   } = props;
   const textArr = text.split("");
 
@@ -31,8 +32,18 @@ const TypingTestBox = React.forwardRef((props, ref) => {
   const typeSoundRef = useRef(null);
 
   useEffect(() => {
-    typeSoundRef.current = new Audio(cherryBlue);
-  }, []);
+    if(typingSound == "Mechanical"){
+      typeSoundRef.current = new Audio(cherryBlue);
+    }else if(typingSound == "Regular"){
+      typeSoundRef.current = new Audio(keyboardSound);
+    }else if(typingSound == "Tick Machine"){
+      typeSoundRef.current = new Audio(typeSoft);
+    }else if(typingSound == "Ugh (Minecraft)"){
+      typeSoundRef.current = new Audio(ugh);
+    }else if(typingSound == "Augh"){
+      typeSoundRef.current = new Audio(augh);
+    }
+  }, [typingSound]);
 
   const playTypeSound = () => {
     if (typeSoundRef.current) {
@@ -147,9 +158,9 @@ const TypingTestBox = React.forwardRef((props, ref) => {
     }
   };
 
-  if (ref.current) {
+  // if (ref.current) {
     // console.log(ref.current.offsetWidth)
-  }
+  // }
 
   const handleClick = (e) => {
     setFocusDiv((fc) => !fc);

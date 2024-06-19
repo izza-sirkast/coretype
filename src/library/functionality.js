@@ -18,7 +18,6 @@ export const calculateWPM = (timeMode, cursorPos, salahKetik, salahKetikKelebiha
 
 export const calculateAccuracy = (cursorPos, salahKetikSemua, salahKetikKelebihan) => {
     // cursorPos - salahKetik - salahKetikKelebihan
-    console.log(cursorPos, salahKetikSemua, salahKetikKelebihan["count"])
     const accuracy = Math.round(((cursorPos - salahKetikSemua - salahKetikKelebihan["count"]) / cursorPos) * 100)
     return accuracy
 }
@@ -47,7 +46,6 @@ export const updateStats = (timeMode, timerSec, cursorPos, salahKetik, salahKeti
       if(statsOverTime.at(-1)[0] != countUp && wpm != NaN && countUp != 0){
         setStatsOverTime(sts => [...sts, [countUp, wpm, grossWpm]])
       }
-      console.log(statsOverTime)
     }
   }
 
