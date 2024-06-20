@@ -111,7 +111,7 @@ function FinishPage({
           </div>
 
           <RestartButton
-            size={"7"}
+            size={"6"}
             setFinish={setFinish}
             setCursorPos={setCursorPos}
             setSalahKetik={setSalahKetik}
@@ -127,7 +127,7 @@ function FinishPage({
           />
 
           <RestartButton
-            size={"7"}
+            size={"6"}
             setFinish={setFinish}
             setCursorPos={setCursorPos}
             setSalahKetik={setSalahKetik}
