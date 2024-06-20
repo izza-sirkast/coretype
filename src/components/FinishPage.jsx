@@ -44,15 +44,13 @@ export const options = {
     },
   },
   chartArea: {
-    left: 20,
+    left: 30,
     right: 0,
   },
 };
 
 function FinishPage({
-  language,
-  difficulty,
-  timeMode,
+  testSettings,
   cursorPos,
   salahKetik,
   salahKetikKelebihan,
@@ -66,7 +64,9 @@ function FinishPage({
   setStatsOverTime,
   salahKetikSemuaCount,
   setSalahKetikSemuaCount,
+  setText
 }) {
+  const {language, difficulty, timeMode} = testSettings
   let wpm = calculateWPM(timeMode, cursorPos, salahKetik, salahKetikKelebihan);
   let grossWPM = calculateGrossWPM(timeMode, cursorPos, salahKetikKelebihan);
   let accuracy = calculateAccuracy(
@@ -120,14 +120,27 @@ function FinishPage({
             setTimer={setTimer}
             setStatsOverTime={setStatsOverTime}
             setSalahKetikSemuaCount={setSalahKetikSemuaCount}
+            language={language}
+            difficulty={difficulty}
+            setText={setText}
+            restartType={"restart"}
           />
 
-          <GrNext
-            className="border border-white text-white rounded-md text-7xl hover:cursor-pointer hover:bg-white hover:bg-opacity-20 transition-all ease-in mr-2"
-            onClick={() => {
-              window.location.reload();
-            }}
-          ></GrNext>
+          <RestartButton
+            size={"7"}
+            setFinish={setFinish}
+            setCursorPos={setCursorPos}
+            setSalahKetik={setSalahKetik}
+            setSalahKetikKelebihan={setSalahKetikKelebihan}
+            setFocusDiv={setFocusDiv}
+            setTimer={setTimer}
+            setStatsOverTime={setStatsOverTime}
+            setSalahKetikSemuaCount={setSalahKetikSemuaCount}
+            language={language}
+            difficulty={difficulty}
+            setText={setText}
+            restartType={"new test"}
+          />
         </div>
       </div>
     </div>

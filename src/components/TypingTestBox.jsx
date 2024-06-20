@@ -42,6 +42,8 @@ const TypingTestBox = React.forwardRef((props, ref) => {
       typeSoundRef.current = new Audio(ugh);
     }else if(typingSound == "Augh"){
       typeSoundRef.current = new Audio(augh);
+    }else if(typingSound == "No Sound"){
+      typeSoundRef.current = null;
     }
   }, [typingSound]);
 
@@ -62,7 +64,9 @@ const TypingTestBox = React.forwardRef((props, ref) => {
   );
 
   const handleType = (e) => {
-    playTypeSound();
+    
+    if(typingSound != "No Sound")playTypeSound();
+
     // Mulai waktu tepat saat mengetik huruf pertama
     if (cursorPos == 0 && timerSec == parseInt(timeMode)) {
       setTimer((t) => "start");
@@ -157,10 +161,6 @@ const TypingTestBox = React.forwardRef((props, ref) => {
       setCursorPos((cp) => cp + 1);
     }
   };
-
-  // if (ref.current) {
-    // console.log(ref.current.offsetWidth)
-  // }
 
   const handleClick = (e) => {
     setFocusDiv((fc) => !fc);
