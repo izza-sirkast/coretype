@@ -25,24 +25,28 @@ export default function TypingTest() {
   const [salahKetikSemuaCount, setSalahKetikSemuaCount] = useState(0);
   const [salahKetikKelebihan, setSalahKetikKelebihan] = useState({ count: 0 }); // Menyetor index salah ketik kelebihan huruf, seperti "tinggal" diketik jadi "tinggalp", nilai akan setor objek {index_p, "p"}
   const [focusDiv, setFocusDiv] = useState(true); // Untuk mentogle fokus typing div
+
+  // ------- State untuk mengontrol test flow -------
   const [finish, setFinish] = useState(false); // State game apakah selesai atau belum
   const [timerSec, setTimerSec] = useState(30); // Timer dalam detik
   const [timer, setTimer] = useState("steady"); // status timer
+  
+  // Untuk menghitung kecepatan dan keakuratan mengetik sepanjang waktu mengetik
   const [statsOverTime, setStatsOverTime] = useState([["Time", "WPM", "Raw"]]);
-  const [language, setLanguage] = useState("Indonesia");
-  const [difficulty, setDifficulty] = useState("Easy");
-  const [timeMode, setTimeMode] = useState("30");
-  const [typingSound, setTypingSound] = useState("Mechanical")
+
+  // Typing test settings
+  const [testSettings, setTestSettings] = useState({language:"Indonesia", difficulty:"Easy", timeMode : "30", typingSound:"Mechanical"})
+
   const typingDivRef = useRef(); // Untuk me-ref typing div
 
   // Menyiapkan text dari file json
   useEffect(() => {
-    getWords1000(setText, language, difficulty);
+    getWords1000(setText, testSettings.language, testSettings.difficulty);
   }, []);
 
   useEffect(() => {
-    getWords1000(setText, language, difficulty);
-  }, [language, difficulty]);
+    getWords1000(setText, testSettings.language, testSettings.difficulty);
+  }, [testSettings.language, testSettings.difficulty]);
 
   // Timer regulation
   useEffect(() => {
@@ -50,14 +54,13 @@ export default function TypingTest() {
     if (timer == "start") {
       interval = setInterval(() => {
         setTimerSec((ts) => {
-          // updateStats(timeMode, ts, cursorPos, salahKetik, salahKetikKelebihan, setStatsOverTime)
           return ts - 1;
         });
       }, 1000);
     } else if (timer == "stop") {
       clearInterval(interval);
     } else if (timer == "restart") {
-      setTimerSec((ts) => parseInt(timeMode));
+      setTimerSec((ts) => parseInt(testSettings.timeMode));
       setTimer((t) => "steady");
     }
 
@@ -66,7 +69,7 @@ export default function TypingTest() {
 
   if (!finish) {
     updateStats(
-      timeMode,
+      testSettings.timeMode,
       timerSec,
       cursorPos,
       salahKetik,
@@ -77,14 +80,15 @@ export default function TypingTest() {
   }
 
   useEffect(() => {
-    setTimerSec((ts) => parseInt(timeMode));
-  }, [timeMode]);
+    setTimerSec((ts) => parseInt(testSettings.timeMode));
+  }, [testSettings.timeMode]);
 
   if (timerSec <= 0 && !finish) {
     setFinish((f) => true);
     setTimer((t) => "stop");
-    setTimerSec((t) => parseInt(timeMode));
+    setTimerSec((t) => parseInt(testSettings.timeMode));
   }
+
 
   // ------------------------------- Section khusus handling div focus -------------------------------
   // Untuk menghilakngkan fokus ke typing test div saat luar div diklik
@@ -100,14 +104,12 @@ export default function TypingTest() {
     setFocusDiv((fd) => false);
   };
 
-  // ------------------------------- COMPONENTS // RENDER VARIABLES -------------------------------
-  // Result card, mengambil hasil wpm dengan fungsi calculateWPM dari library/functionality
+
+  // Apabila test dalam keadaan finish atau selesai
   if (finish) {
     return (
       <FinishPage
-        language={language}
-        difficulty={difficulty}
-        timeMode={timeMode}
+        testSettings={testSettings}
         cursorPos={cursorPos}
         salahKetik={salahKetik}
         salahKetikKelebihan={salahKetikKelebihan}
@@ -157,20 +159,20 @@ export default function TypingTest() {
 
         <div className="flex *:ml-3">
           <ChooseLanguage
-            language={language}
-            setLanguage={setLanguage}
+            testSettings={testSettings}
+            setTestSettings={setTestSettings}
             timer={timer}
           />
 
           <ChooseDifficulty
-            difficulty={difficulty}
-            setDifficulty={setDifficulty}
+            testSettings={testSettings}
+            setTestSettings={setTestSettings}
             timer={timer}
           />
 
           <ChooseTime
-            timeMode={timeMode}
-            setTimeMode={setTimeMode}
+            testSettings={testSettings}
+            setTestSettings={setTestSettings}
             timer={timer}
           />
         </div>
@@ -191,13 +193,13 @@ export default function TypingTest() {
         setTimer={setTimer}
         text={text}
         ref={typingDivRef}
-        timeMode={timeMode}
+        timeMode={testSettings.timeMode}
         setSalahKetikSemuaCount={setSalahKetikSemuaCount}
-        typingSound={typingSound}
+        typingSound={testSettings.typingSound}
       />
 
       <div className="flex items-center mx-auto option-container-width mt-5 px-2 justify-between">
-            <ChooseTypingSound typingSound={typingSound} setTypingSound={setTypingSound} timer={timer} />
+            <ChooseTypingSound testSettings={testSettings} setTestSettings={setTestSettings} timer={timer} />
       </div>
     </div>
   );

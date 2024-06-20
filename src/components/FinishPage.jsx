@@ -50,9 +50,7 @@ export const options = {
 };
 
 function FinishPage({
-  language,
-  difficulty,
-  timeMode,
+  testSettings,
   cursorPos,
   salahKetik,
   salahKetikKelebihan,
@@ -67,6 +65,7 @@ function FinishPage({
   salahKetikSemuaCount,
   setSalahKetikSemuaCount,
 }) {
+  const {language, difficulty, timeMode} = testSettings
   let wpm = calculateWPM(timeMode, cursorPos, salahKetik, salahKetikKelebihan);
   let grossWPM = calculateGrossWPM(timeMode, cursorPos, salahKetikKelebihan);
   let accuracy = calculateAccuracy(
