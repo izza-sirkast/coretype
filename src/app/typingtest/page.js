@@ -123,10 +123,10 @@ export default function TypingTest() {
         setStatsOverTime={setStatsOverTime}
         salahKetikSemuaCount={salahKetikSemuaCount}
         setSalahKetikSemuaCount={setSalahKetikSemuaCount}
+        setText={setText} 
       />
     );
   }
-  console.log(statsOverTime)
   return (
     <div className="w-full max-h-screen min-h-screen home-gradient">
       <NavBar />
@@ -142,15 +142,28 @@ export default function TypingTest() {
             setSalahKetikKelebihan={setSalahKetikKelebihan}
             setTimer={setTimer}
             setStatsOverTime={setStatsOverTime}
-            setSalahKetikSemuaCount={setSalahKetikSemuaCount}
+            setSalahKetikSemuaCount={setSalahKetikSemuaCount} 
+            language={testSettings.language} 
+            difficulty={testSettings.difficulty} 
+            setText={setText} 
+            restartType={"restart"}
           />
 
-          <GrNext
-            className="border border-white text-white rounded-md text-5xl hover:cursor-pointer hover:bg-white hover:bg-opacity-20 transition-all ease-in mr-2"
-            onClick={() => {
-              window.location.reload();
-            }}
-          ></GrNext>
+          <RestartButton
+            size={"5"}
+            setCursorPos={setCursorPos}
+            setFinish={setFinish}
+            setSalahKetik={setSalahKetik}
+            setFocusDiv={setFocusDiv}
+            setSalahKetikKelebihan={setSalahKetikKelebihan}
+            setTimer={setTimer}
+            setStatsOverTime={setStatsOverTime}
+            setSalahKetikSemuaCount={setSalahKetikSemuaCount} 
+            language={testSettings.language} 
+            difficulty={testSettings.difficulty} 
+            setText={setText} 
+            restartType={"new test"}
+          />
 
           <div className="text-xl px-3 py-2 border border-white text-white rounded-md">
             {timerSec}

@@ -162,10 +162,6 @@ const TypingTestBox = React.forwardRef((props, ref) => {
     }
   };
 
-  // if (ref.current) {
-    // console.log(ref.current.offsetWidth)
-  // }
-
   const handleClick = (e) => {
     setFocusDiv((fc) => !fc);
   };
