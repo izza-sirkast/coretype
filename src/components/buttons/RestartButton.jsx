@@ -10,7 +10,7 @@ function RestartButton({setFinish, setCursorPos, setSalahKetik, setSalahKetikKel
     setSalahKetik(sk => [])
     setSalahKetikKelebihan(skk => {return {count:0}})
     setFocusDiv(fd => true)
-    setStatsOverTime(sot => [["Time", "WPM", "Raw"]])
+    setStatsOverTime(sot => ([["Time", "WPM", "Raw"]]))
     setTimer(t => "restart")
     setSalahKetikSemuaCount(skc => 0)
   }

@@ -44,7 +44,7 @@ export const options = {
     },
   },
   chartArea: {
-    left: 20,
+    left: 30,
     right: 0,
   },
 };

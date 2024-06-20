@@ -67,7 +67,7 @@ export default function TypingTest() {
     return () => clearInterval(interval);
   }, [timer]);
 
-  if (!finish) {
+  if (!finish && timer != "steady" && timer != "restart") {
     updateStats(
       testSettings.timeMode,
       timerSec,
@@ -126,7 +126,7 @@ export default function TypingTest() {
       />
     );
   }
-
+  console.log(statsOverTime)
   return (
     <div className="w-full max-h-screen min-h-screen home-gradient">
       <NavBar />
