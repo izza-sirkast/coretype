@@ -24,7 +24,7 @@ const TypingTestBox = React.forwardRef((props, ref) => {
     text,
     timeMode,
     setSalahKetikSemuaCount,
-    typingSound
+    typingSound,
   } = props;
   const textArr = text.split("");
 
@@ -32,18 +32,18 @@ const TypingTestBox = React.forwardRef((props, ref) => {
   const typeSoundRef = useRef(null);
 
   useEffect(() => {
-    if(typingSound == "Mechanical"){
-      typeSoundRef.current = new Audio(cherryBlue);
-    }else if(typingSound == "Regular"){
-      typeSoundRef.current = new Audio(keyboardSound);
-    }else if(typingSound == "Tick Machine"){
-      typeSoundRef.current = new Audio(typeSoft);
-    }else if(typingSound == "Ugh (Minecraft)"){
-      typeSoundRef.current = new Audio(ugh);
-    }else if(typingSound == "Augh"){
-      typeSoundRef.current = new Audio(augh);
-    }else if(typingSound == "No Sound"){
+    if (typingSound == "No Sound") {
       typeSoundRef.current = null;
+    } else if (typingSound == "Mechanical") {
+      typeSoundRef.current = new Audio(cherryBlue);
+    } else if (typingSound == "Regular") {
+      typeSoundRef.current = new Audio(keyboardSound);
+    } else if (typingSound == "Tick Machine") {
+      typeSoundRef.current = new Audio(typeSoft);
+    } else if (typingSound == "Ugh (Minecraft)") {
+      typeSoundRef.current = new Audio(ugh);
+    } else if (typingSound == "Augh") {
+      typeSoundRef.current = new Audio(augh);
     }
   }, [typingSound]);
 
@@ -64,8 +64,7 @@ const TypingTestBox = React.forwardRef((props, ref) => {
   );
 
   const handleType = (e) => {
-    
-    if(typingSound != "No Sound")playTypeSound();
+    if (typingSound != "No Sound") playTypeSound();
 
     // Mulai waktu tepat saat mengetik huruf pertama
     if (cursorPos == 0 && timerSec == parseInt(timeMode)) {

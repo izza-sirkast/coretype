@@ -30,12 +30,17 @@ export default function TypingTest() {
   const [finish, setFinish] = useState(false); // State game apakah selesai atau belum
   const [timerSec, setTimerSec] = useState(30); // Timer dalam detik
   const [timer, setTimer] = useState("steady"); // status timer
-  
+
   // Untuk menghitung kecepatan dan keakuratan mengetik sepanjang waktu mengetik
   const [statsOverTime, setStatsOverTime] = useState([["Time", "WPM", "Raw"]]);
 
   // Typing test settings
-  const [testSettings, setTestSettings] = useState({language:"Indonesia", difficulty:"Easy", timeMode : "30", typingSound:"Mechanical"})
+  const [testSettings, setTestSettings] = useState({
+    language: "Indonesia",
+    difficulty: "Easy",
+    timeMode: "30",
+    typingSound: "No Sound",
+  });
 
   const typingDivRef = useRef(); // Untuk me-ref typing div
 
@@ -89,7 +94,6 @@ export default function TypingTest() {
     setTimerSec((t) => parseInt(testSettings.timeMode));
   }
 
-
   // ------------------------------- Section khusus handling div focus -------------------------------
   // Untuk menghilakngkan fokus ke typing test div saat luar div diklik
   useEffect(() => {
@@ -103,7 +107,6 @@ export default function TypingTest() {
   const handleClickOutside = (event) => {
     setFocusDiv((fd) => false);
   };
-
 
   // Apabila test dalam keadaan finish atau selesai
   if (finish) {
@@ -123,7 +126,7 @@ export default function TypingTest() {
         setStatsOverTime={setStatsOverTime}
         salahKetikSemuaCount={salahKetikSemuaCount}
         setSalahKetikSemuaCount={setSalahKetikSemuaCount}
-        setText={setText} 
+        setText={setText}
       />
     );
   }
@@ -142,10 +145,10 @@ export default function TypingTest() {
             setSalahKetikKelebihan={setSalahKetikKelebihan}
             setTimer={setTimer}
             setStatsOverTime={setStatsOverTime}
-            setSalahKetikSemuaCount={setSalahKetikSemuaCount} 
-            language={testSettings.language} 
-            difficulty={testSettings.difficulty} 
-            setText={setText} 
+            setSalahKetikSemuaCount={setSalahKetikSemuaCount}
+            language={testSettings.language}
+            difficulty={testSettings.difficulty}
+            setText={setText}
             restartType={"restart"}
           />
 
@@ -158,36 +161,16 @@ export default function TypingTest() {
             setSalahKetikKelebihan={setSalahKetikKelebihan}
             setTimer={setTimer}
             setStatsOverTime={setStatsOverTime}
-            setSalahKetikSemuaCount={setSalahKetikSemuaCount} 
-            language={testSettings.language} 
-            difficulty={testSettings.difficulty} 
-            setText={setText} 
+            setSalahKetikSemuaCount={setSalahKetikSemuaCount}
+            language={testSettings.language}
+            difficulty={testSettings.difficulty}
+            setText={setText}
             restartType={"new test"}
           />
 
           <div className="text-xl px-3 py-2 border border-white text-white rounded-md">
             {timerSec}
           </div>
-        </div>
-
-        <div className="flex *:ml-3">
-          <ChooseLanguage
-            testSettings={testSettings}
-            setTestSettings={setTestSettings}
-            timer={timer}
-          />
-
-          <ChooseDifficulty
-            testSettings={testSettings}
-            setTestSettings={setTestSettings}
-            timer={timer}
-          />
-
-          <ChooseTime
-            testSettings={testSettings}
-            setTestSettings={setTestSettings}
-            timer={timer}
-          />
         </div>
       </div>
 
@@ -212,7 +195,28 @@ export default function TypingTest() {
       />
 
       <div className="flex items-center mx-auto option-container-width mt-5 px-2 justify-between">
-            <ChooseTypingSound testSettings={testSettings} setTestSettings={setTestSettings} timer={timer} />
+        <ChooseTypingSound
+          testSettings={testSettings}
+          setTestSettings={setTestSettings}
+          timer={timer}
+        />
+        <ChooseLanguage
+          testSettings={testSettings}
+          setTestSettings={setTestSettings}
+          timer={timer}
+        />
+
+        <ChooseDifficulty
+          testSettings={testSettings}
+          setTestSettings={setTestSettings}
+          timer={timer}
+        />
+
+        <ChooseTime
+          testSettings={testSettings}
+          setTestSettings={setTestSettings}
+          timer={timer}
+        />
       </div>
     </div>
   );

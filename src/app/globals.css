@@ -38,7 +38,7 @@
 }
 
 .home-gradient {
-  background: linear-gradient(151deg, #121716, #01008a);
+  background: linear-gradient(45deg, #121716, #01008a);
   background-size: 400% 400%;
 
   -webkit-animation: BlueBlackGradient 8s ease infinite;
