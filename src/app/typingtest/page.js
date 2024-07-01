@@ -39,7 +39,7 @@ export default function TypingTest() {
     language: "Indonesia",
     difficulty: "Easy",
     timeMode: "30",
-    typingSound: "No Sound",
+    typingSound: "Mechanical",
   });
 
   const typingDivRef = useRef(); // Untuk me-ref typing div
@@ -172,6 +172,11 @@ export default function TypingTest() {
             {timerSec}
           </div>
         </div>
+        <ChooseTime
+          testSettings={testSettings}
+          setTestSettings={setTestSettings}
+          timer={timer}
+        />
       </div>
 
       <TypingTestBox
@@ -195,11 +200,6 @@ export default function TypingTest() {
       />
 
       <div className="flex items-center mx-auto option-container-width mt-5 px-2 justify-between">
-        <ChooseTypingSound
-          testSettings={testSettings}
-          setTestSettings={setTestSettings}
-          timer={timer}
-        />
         <ChooseLanguage
           testSettings={testSettings}
           setTestSettings={setTestSettings}
@@ -211,8 +211,9 @@ export default function TypingTest() {
           setTestSettings={setTestSettings}
           timer={timer}
         />
-
-        <ChooseTime
+      </div>
+      <div className="flex justify-center">
+        <ChooseTypingSound
           testSettings={testSettings}
           setTestSettings={setTestSettings}
           timer={timer}
