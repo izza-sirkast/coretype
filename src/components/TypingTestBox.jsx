@@ -6,6 +6,8 @@ import keyboardSound from "@/assets/sound/keyboard.wav";
 import typeSoft from "@/assets/sound/typeSoft.wav";
 import augh from "@/assets/sound/augh.wav";
 import ugh from "@/assets/sound/ugh.wav";
+import quack from "@/assets/sound/quack.wav";
+import wack from "@/assets/sound/wack.wav";
 
 const TypingTestBox = React.forwardRef((props, ref) => {
   const {
@@ -44,6 +46,10 @@ const TypingTestBox = React.forwardRef((props, ref) => {
       typeSoundRef.current = new Audio(ugh);
     } else if (typingSound == "Augh") {
       typeSoundRef.current = new Audio(augh);
+    } else if (typingSound == "Quack") {
+      typeSoundRef.current = new Audio(quack);
+    } else if (typingSound == "Wack") {
+      typeSoundRef.current = new Audio(wack);
     }
   }, [typingSound]);
 

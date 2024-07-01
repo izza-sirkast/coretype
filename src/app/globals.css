@@ -20,6 +20,10 @@
   word-spacing: 0.1rem;
 }
 
+body {
+  font-family: var(--font-poppins);
+}
+
 .bg-light-blue {
   background-color: #126bf9;
 }
