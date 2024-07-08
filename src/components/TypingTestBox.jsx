@@ -45,7 +45,7 @@ const TypingTestBox = React.forwardRef((props, ref) => {
       typeSoundRef.current = new Audio(ugh);
     } else if (typingSound === "Augh") {
       typeSoundRef.current = new Audio(augh);
-    } else if (typingSound === "Quack") {
+    } else if (typingSound === "Qwack") {
       typeSoundRef.current = new Audio(quack);
     } else if (typingSound === "Wack") {
       typeSoundRef.current = new Audio(wack);
