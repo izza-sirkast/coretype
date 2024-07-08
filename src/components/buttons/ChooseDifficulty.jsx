@@ -18,14 +18,14 @@ function ChooseDifficulty({ testSettings, setTestSettings, timer }) {
               className="hidden"
             />
             <span
-              className={`${
+              className={`hover:font-bold hover:text-white ${
                 testSettings.difficulty === "Easy" ? "font-bold text-white" : ""
               }`}
             >
               Easy
             </span>
           </label>
-          <p className="text-slate-300">|</p>
+          <p className="text-slate-300 cursor-default">|</p>
           <label className="block text-slate-300 cursor-pointer">
             <input
               type="radio"
@@ -35,7 +35,7 @@ function ChooseDifficulty({ testSettings, setTestSettings, timer }) {
               className="hidden"
             />
             <span
-              className={`${
+              className={`hover:font-bold hover:text-white ${
                 testSettings.difficulty === "Medium"
                   ? "font-bold text-white"
                   : ""
@@ -44,7 +44,7 @@ function ChooseDifficulty({ testSettings, setTestSettings, timer }) {
               Medium
             </span>
           </label>
-          <p className="text-slate-300">|</p>
+          <p className="text-slate-300 cursor-default">|</p>
           <label className="block text-slate-300 cursor-pointer">
             <input
               type="radio"
@@ -54,7 +54,7 @@ function ChooseDifficulty({ testSettings, setTestSettings, timer }) {
               className="hidden"
             />
             <span
-              className={`${
+              className={`hover:font-bold hover:text-white ${
                 testSettings.difficulty === "Hard" ? "font-bold text-white" : ""
               }`}
             >

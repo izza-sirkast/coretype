@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-
 import { generateProgressText } from "@/library/functionality";
 import cherryBlue from "@/assets/sound/cherryBlue.wav";
 import keyboardSound from "@/assets/sound/keyboard.wav";
@@ -34,21 +33,21 @@ const TypingTestBox = React.forwardRef((props, ref) => {
   const typeSoundRef = useRef(null);
 
   useEffect(() => {
-    if (typingSound == "No Sound") {
+    if (typingSound === "No Sound") {
       typeSoundRef.current = null;
-    } else if (typingSound == "Mechanical") {
+    } else if (typingSound === "Mechanical") {
       typeSoundRef.current = new Audio(cherryBlue);
-    } else if (typingSound == "Regular") {
+    } else if (typingSound === "Regular") {
       typeSoundRef.current = new Audio(keyboardSound);
-    } else if (typingSound == "Tick Machine") {
+    } else if (typingSound === "Tick Machine") {
       typeSoundRef.current = new Audio(typeSoft);
-    } else if (typingSound == "Ugh (Minecraft)") {
+    } else if (typingSound === "Ugh (Minecraft)") {
       typeSoundRef.current = new Audio(ugh);
-    } else if (typingSound == "Augh") {
+    } else if (typingSound === "Augh") {
       typeSoundRef.current = new Audio(augh);
-    } else if (typingSound == "Quack") {
+    } else if (typingSound === "Quack") {
       typeSoundRef.current = new Audio(quack);
-    } else if (typingSound == "Wack") {
+    } else if (typingSound === "Wack") {
       typeSoundRef.current = new Audio(wack);
     }
   }, [typingSound]);
@@ -70,20 +69,20 @@ const TypingTestBox = React.forwardRef((props, ref) => {
   );
 
   const handleType = (e) => {
-    if (typingSound != "No Sound") playTypeSound();
+    if (typingSound !== "No Sound") playTypeSound();
 
     // Mulai waktu tepat saat mengetik huruf pertama
-    if (cursorPos == 0 && timerSec == parseInt(timeMode)) {
-      setTimer((t) => "start");
+    if (cursorPos === 0 && timerSec === parseInt(timeMode)) {
+      setTimer("start");
     }
 
     // Jika pada state finish
-    if (timer == "finish" || timer == "stop") {
+    if (timer === "finish" || timer === "stop") {
       return;
     }
 
     // Jika salah ketik pada tempat yang harusnya spasi
-    if (textArr[cursorPos] == " " && e.key != " " && e.key != "Backspace") {
+    if (textArr[cursorPos] === " " && e.key !== " " && e.key !== "Backspace") {
       if (!/^[a-z0-9]+$/i.test(e.key) || e.key.length > 1) {
         setSalahKetikKelebihan((sk) => {
           let newSKK = { ...sk };
@@ -109,13 +108,13 @@ const TypingTestBox = React.forwardRef((props, ref) => {
     }
 
     let currentCursorPos = cursorPos; // Variabel posisi kursor untuk menghindari effect react cycle
-    if (e.key == " ") {
+    if (e.key === " ") {
       // Handling space
       // Loncat setiap huruf sampai kata selanjutnya
       let cursorPosTemp = cursorPos;
       let salahKetikTemp = [];
       let letterCount = 0;
-      while (textArr[cursorPosTemp] != " " && cursorPosTemp < textArr.length) {
+      while (textArr[cursorPosTemp] !== " " && cursorPosTemp < textArr.length) {
         salahKetikTemp.push(cursorPosTemp);
         cursorPosTemp++;
         letterCount++;
@@ -124,10 +123,10 @@ const TypingTestBox = React.forwardRef((props, ref) => {
       setSalahKetik((sk) => [...sk, ...salahKetikTemp]);
       setSalahKetikSemuaCount((skc) => skc + letterCount);
       currentCursorPos = cursorPosTemp;
-      setCursorPos((cursorPos) => cursorPosTemp);
-    } else if (e.key == "Backspace") {
+      setCursorPos(cursorPosTemp);
+    } else if (e.key === "Backspace") {
       // handling backspace
-      if (cursorPos == 0) {
+      if (cursorPos === 0) {
         // Jika pada posisi kursor 0 maka langsung return
         return;
       }
@@ -150,8 +149,8 @@ const TypingTestBox = React.forwardRef((props, ref) => {
         salahKetik.splice(salahKetik.indexOf(cursorPos - 1), 1);
       }
       currentCursorPos = cursorPos - 1;
-      setCursorPos((cursorPos) => cursorPos - 1);
-    } else if (e.key != textArr[cursorPos]) {
+      setCursorPos(cursorPos - 1);
+    } else if (e.key !== textArr[cursorPos]) {
       // handling salah ketik
       if (e.key.length > 1) {
         return;
@@ -159,11 +158,11 @@ const TypingTestBox = React.forwardRef((props, ref) => {
       setSalahKetik((sk) => [...sk, cursorPos]);
       setSalahKetikSemuaCount((skc) => skc + 1);
       currentCursorPos = cursorPos + 1;
-      setCursorPos((cp) => cp + 1);
+      setCursorPos(cursorPos + 1);
     } else {
       // handling anything else
       currentCursorPos = cursorPos + 1;
-      setCursorPos((cp) => cp + 1);
+      setCursorPos(cursorPos + 1);
     }
   };
 
@@ -177,10 +176,10 @@ const TypingTestBox = React.forwardRef((props, ref) => {
     } else {
       ref.current.blur();
     }
-  }, [focusDiv]);
+  }, [focusDiv, ref]); // Include 'ref' in the dependency array
 
   // Merender text sesuai dengan action user dan kondisi text sebelumnya
-  let containerWidth = ref.current ? ref.current.offsetWidth : 50;
+  let containerWidth = ref.current ? ref.current.offsetWidth : 10;
   let progressText = generateProgressText(
     text,
     cursorPos,
@@ -196,11 +195,13 @@ const TypingTestBox = React.forwardRef((props, ref) => {
       tabIndex="0"
       onKeyDown={handleType}
       onClick={handleClick}
-      className={`overflow-y-hidden overflow-hidden text-2xl outline-none rounded-2xl px-8 py-4 select-none text-white bg-slate-300 bg-opacity-10 testcontainer-length mx-auto`}
+      className="overflow-hidden overflow-y-hidden outline-none rounded-2xl px-8 py-4 select-none bg-slate-300 bg-opacity-10  mx-auto testcontainer-length"
     >
-      {progressText}
+      <p className="text-2xl text-white text-justify w-fit">{progressText}</p>
     </div>
   );
 });
+
+TypingTestBox.displayName = "TypingTestBox";
 
 export default TypingTestBox;

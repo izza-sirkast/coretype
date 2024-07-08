@@ -8,8 +8,8 @@ function ChooseTypingSound({ testSettings, setTestSettings, timer }) {
   return (
     <div className="">
       {timer !== "start" && (
-        <div className="flex py-1 gap-2">
-          <label className="block text-slate-300 cursor-pointer">
+        <div className="flex py-1 gap-3">
+          <label className="text-slate-300 cursor-pointer">
             <input
               type="radio"
               value="Mechanical"
@@ -18,7 +18,7 @@ function ChooseTypingSound({ testSettings, setTestSettings, timer }) {
               className="hidden"
             />
             <span
-              className={`${
+              className={`hover:font-bold hover:text-white ${
                 testSettings.typingSound === "Mechanical"
                   ? "font-bold text-white"
                   : ""
@@ -27,8 +27,8 @@ function ChooseTypingSound({ testSettings, setTestSettings, timer }) {
               Mechanical
             </span>
           </label>
-          <p className="text-slate-300">|</p>
-          <label className="block text-slate-300 cursor-pointer">
+          <p className="text-slate-300 cursor-default">|</p>
+          <label className="text-slate-300 cursor-pointer">
             <input
               type="radio"
               value="Regular"
@@ -37,7 +37,7 @@ function ChooseTypingSound({ testSettings, setTestSettings, timer }) {
               className="hidden"
             />
             <span
-              className={`${
+              className={`hover:font-bold hover:text-white ${
                 testSettings.typingSound === "Regular"
                   ? "font-bold text-white"
                   : ""
@@ -46,8 +46,8 @@ function ChooseTypingSound({ testSettings, setTestSettings, timer }) {
               Regular
             </span>
           </label>
-          <p className="text-slate-300">|</p>
-          <label className="block text-slate-300 cursor-pointer">
+          <p className="text-slate-300 cursor-default">|</p>
+          <label className="text-slate-300 cursor-pointer">
             <input
               type="radio"
               value="Tick Machine"
@@ -56,7 +56,7 @@ function ChooseTypingSound({ testSettings, setTestSettings, timer }) {
               className="hidden"
             />
             <span
-              className={`${
+              className={`hover:font-bold hover:text-white ${
                 testSettings.typingSound === "Tick Machine"
                   ? "font-bold text-white"
                   : ""
@@ -65,8 +65,8 @@ function ChooseTypingSound({ testSettings, setTestSettings, timer }) {
               Tick Machine
             </span>
           </label>
-          <p className="text-slate-300">|</p>
-          <label className="block text-slate-300 cursor-pointer">
+          <p className="text-slate-300 cursor-default">|</p>
+          <label className="text-slate-300 cursor-pointer">
             <input
               type="radio"
               value="Augh"
@@ -75,7 +75,7 @@ function ChooseTypingSound({ testSettings, setTestSettings, timer }) {
               className="hidden"
             />
             <span
-              className={`${
+              className={`hover:font-bold hover:text-white ${
                 testSettings.typingSound === "Augh"
                   ? "font-bold text-white"
                   : ""
@@ -84,8 +84,8 @@ function ChooseTypingSound({ testSettings, setTestSettings, timer }) {
               Augh
             </span>
           </label>
-          <p className="text-slate-300">|</p>
-          <label className="block text-slate-300 cursor-pointer">
+          <p className="text-slate-300 cursor-default">|</p>
+          <label className="text-slate-300 cursor-pointer">
             <input
               type="radio"
               value="Qwack"
@@ -94,7 +94,7 @@ function ChooseTypingSound({ testSettings, setTestSettings, timer }) {
               className="hidden"
             />
             <span
-              className={`${
+              className={`hover:font-bold hover:text-white ${
                 testSettings.typingSound === "Qwack"
                   ? "font-bold text-white"
                   : ""
@@ -103,8 +103,8 @@ function ChooseTypingSound({ testSettings, setTestSettings, timer }) {
               Qwack
             </span>
           </label>
-          <p className="text-slate-300">|</p>
-          <label className="block text-slate-300 cursor-pointer">
+          <p className="text-slate-300 cursor-default">|</p>
+          <label className="text-slate-300 cursor-pointer">
             <input
               type="radio"
               value="Wack"
@@ -113,7 +113,7 @@ function ChooseTypingSound({ testSettings, setTestSettings, timer }) {
               className="hidden"
             />
             <span
-              className={`${
+              className={`hover:font-bold hover:text-white ${
                 testSettings.typingSound === "Wack"
                   ? "font-bold text-white"
                   : ""
@@ -122,7 +122,7 @@ function ChooseTypingSound({ testSettings, setTestSettings, timer }) {
               Wack
             </span>
           </label>
-          <p className="text-slate-300">|</p>
+          <p className="text-slate-300 cursor-default">|</p>
           <label className="block text-slate-300 cursor-pointer">
             <input
               type="radio"
@@ -132,7 +132,7 @@ function ChooseTypingSound({ testSettings, setTestSettings, timer }) {
               className="hidden"
             />
             <span
-              className={`${
+              className={`hover:font-bold hover:text-white ${
                 testSettings.typingSound === "No Sound"
                   ? "font-bold text-white"
                   : ""

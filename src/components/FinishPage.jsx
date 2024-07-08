@@ -64,9 +64,9 @@ function FinishPage({
   setStatsOverTime,
   salahKetikSemuaCount,
   setSalahKetikSemuaCount,
-  setText
+  setText,
 }) {
-  const {language, difficulty, timeMode} = testSettings
+  const { language, difficulty, timeMode } = testSettings;
   let wpm = calculateWPM(timeMode, cursorPos, salahKetik, salahKetikKelebihan);
   let grossWPM = calculateGrossWPM(timeMode, cursorPos, salahKetikKelebihan);
   let accuracy = calculateAccuracy(
