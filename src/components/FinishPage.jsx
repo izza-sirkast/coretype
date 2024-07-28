@@ -4,6 +4,7 @@ import Chart from "react-google-charts";
 import NavBar from "./NavBar";
 import RestartButton from "./buttons/RestartButton";
 import { GrNext } from "react-icons/gr";
+import { Motion } from "@/components/transition/motion";
 
 import {
   calculateAccuracy,
@@ -77,72 +78,76 @@ function FinishPage({
   return (
     <div className="w-full max-h-screen min-h-screen home-gradient">
       <NavBar />
-      <div className="mx-auto flex justify-between items-start w-10/12 pr-5 mt-5">
-        <div className="flex flex-col z-10 *:mb-10 ">
-          <div className="flex flex-col items-center mt-8">
-            <p className="text-2xl text-white">WPM</p>
-            <span className="text-6xl text-light-blue -mt-1">{wpm}</span>
-          </div>
+      <Motion>
+        <div className="mx-auto flex justify-between items-start w-10/12 pr-5 mt-5">
+          <div className="flex flex-col z-10 *:mb-10 ">
+            <div className="flex flex-col items-center mt-8">
+              <p className="text-2xl text-white">WPM</p>
+              <span className="text-6xl text-light-blue -mt-1">{wpm}</span>
+            </div>
 
-          <div className="flex flex-col items-center ">
-            <p className="text-2xl text-white">Raw</p>
-            <span className="text-6xl text-light-blue -mt-1">{grossWPM}</span>
-          </div>
+            <div className="flex flex-col items-center ">
+              <p className="text-2xl text-white">Raw</p>
+              <span className="text-6xl text-light-blue -mt-1">{grossWPM}</span>
+            </div>
 
-          <div className="flex flex-col items-center ">
-            <p className="text-2xl text-white">Accuracy</p>
-            <span className="text-6xl text-light-blue -mt-1">{accuracy}%</span>
+            <div className="flex flex-col items-center ">
+              <p className="text-2xl text-white">Accuracy</p>
+              <span className="text-6xl text-light-blue -mt-1">
+                {accuracy}%
+              </span>
+            </div>
           </div>
-        </div>
-        <Chart
-          chartType="LineChart"
-          width="80%"
-          height="400px"
-          data={statsOverTime}
-          options={options}
-        />
-
-        <div className="flex flex-col items-center justify-center mt-10 -ml-32 *:mb-12 ">
-          <div className="flex flex-col items-start text-white">
-            <p className="text-md text-light-blue">Test Setting:</p>
-            <p className="text-sm">{language}</p>
-            <p className="text-sm">{difficulty}</p>
-            <p className="text-sm">{timeMode} Seconds</p>
-          </div>
-
-          <RestartButton
-            size={"6"}
-            setFinish={setFinish}
-            setCursorPos={setCursorPos}
-            setSalahKetik={setSalahKetik}
-            setSalahKetikKelebihan={setSalahKetikKelebihan}
-            setFocusDiv={setFocusDiv}
-            setTimer={setTimer}
-            setStatsOverTime={setStatsOverTime}
-            setSalahKetikSemuaCount={setSalahKetikSemuaCount}
-            language={language}
-            difficulty={difficulty}
-            setText={setText}
-            restartType={"restart"}
+          <Chart
+            chartType="LineChart"
+            width="80%"
+            height="400px"
+            data={statsOverTime}
+            options={options}
           />
 
-          <RestartButton
-            size={"6"}
-            setFinish={setFinish}
-            setCursorPos={setCursorPos}
-            setSalahKetik={setSalahKetik}
-            setSalahKetikKelebihan={setSalahKetikKelebihan}
-            setFocusDiv={setFocusDiv}
-            setTimer={setTimer}
-            setStatsOverTime={setStatsOverTime}
-            setSalahKetikSemuaCount={setSalahKetikSemuaCount}
-            language={language}
-            difficulty={difficulty}
-            setText={setText}
-            restartType={"new test"}
-          />
+          <div className="flex flex-col items-center justify-center mt-10 -ml-32 *:mb-12 ">
+            <div className="flex flex-col items-start text-white">
+              <p className="text-md text-light-blue">Test Setting:</p>
+              <p className="text-sm">{language}</p>
+              <p className="text-sm">{difficulty}</p>
+              <p className="text-sm">{timeMode} Seconds</p>
+            </div>
+
+            <RestartButton
+              size={"6"}
+              setFinish={setFinish}
+              setCursorPos={setCursorPos}
+              setSalahKetik={setSalahKetik}
+              setSalahKetikKelebihan={setSalahKetikKelebihan}
+              setFocusDiv={setFocusDiv}
+              setTimer={setTimer}
+              setStatsOverTime={setStatsOverTime}
+              setSalahKetikSemuaCount={setSalahKetikSemuaCount}
+              language={language}
+              difficulty={difficulty}
+              setText={setText}
+              restartType={"restart"}
+            />
+
+            <RestartButton
+              size={"6"}
+              setFinish={setFinish}
+              setCursorPos={setCursorPos}
+              setSalahKetik={setSalahKetik}
+              setSalahKetikKelebihan={setSalahKetikKelebihan}
+              setFocusDiv={setFocusDiv}
+              setTimer={setTimer}
+              setStatsOverTime={setStatsOverTime}
+              setSalahKetikSemuaCount={setSalahKetikSemuaCount}
+              language={language}
+              difficulty={difficulty}
+              setText={setText}
+              restartType={"new test"}
+            />
+          </div>
         </div>
-      </div>
+      </Motion>
     </div>
   );
 }

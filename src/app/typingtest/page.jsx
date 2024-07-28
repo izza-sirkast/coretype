@@ -16,6 +16,7 @@ import ChooseTypingSound from "@/components/buttons/ChooseTypingSound";
 import NavBar from "@/components/NavBar";
 import FinishPage from "@/components/FinishPage";
 import { updateStats } from "@/library/functionality";
+import { Motion } from "@/components/transition/motion";
 
 export default function TypingTest() {
   // ------------------------------- STATES // VARIABLES DEFINITION -------------------------------
@@ -133,92 +134,93 @@ export default function TypingTest() {
   return (
     <div className="w-full max-h-screen min-h-screen home-gradient">
       <NavBar />
+      <Motion>
+        <div className="flex flex-col items-center">
+          <div className="flex flex-col justify-center items-center">
+            <p className="text-white font-bold mb-1 tracking-widest">TIMER</p>
+            <p className="text-slate-400 text-6xl font-bold mb-2">{timerSec}</p>
+          </div>
+          <div className="flex items-center mb-5 justify-center gap-2">
+            <RestartButton
+              size={"5"}
+              setCursorPos={setCursorPos}
+              setFinish={setFinish}
+              setSalahKetik={setSalahKetik}
+              setFocusDiv={setFocusDiv}
+              setSalahKetikKelebihan={setSalahKetikKelebihan}
+              setTimer={setTimer}
+              setStatsOverTime={setStatsOverTime}
+              setSalahKetikSemuaCount={setSalahKetikSemuaCount}
+              language={testSettings.language}
+              difficulty={testSettings.difficulty}
+              setText={setText}
+              restartType={"restart"}
+            />
 
-      <div className="flex flex-col items-center">
-        <div className="flex flex-col justify-center items-center">
-          <p className="text-white font-bold mb-1 tracking-widest">TIMER</p>
-          <p className="text-slate-400 text-6xl font-bold mb-2">{timerSec}</p>
-        </div>
-        <div className="flex items-center mb-5 justify-center gap-2">
-          <RestartButton
-            size={"5"}
+            <RestartButton
+              size={"5"}
+              setCursorPos={setCursorPos}
+              setFinish={setFinish}
+              setSalahKetik={setSalahKetik}
+              setFocusDiv={setFocusDiv}
+              setSalahKetikKelebihan={setSalahKetikKelebihan}
+              setTimer={setTimer}
+              setStatsOverTime={setStatsOverTime}
+              setSalahKetikSemuaCount={setSalahKetikSemuaCount}
+              language={testSettings.language}
+              difficulty={testSettings.difficulty}
+              setText={setText}
+              restartType={"new test"}
+            />
+            <ChooseTime
+              testSettings={testSettings}
+              setTestSettings={setTestSettings}
+              timer={timer}
+            />
+          </div>
+
+          <TypingTestBox
+            cursorPos={cursorPos}
             setCursorPos={setCursorPos}
-            setFinish={setFinish}
+            salahKetik={salahKetik}
             setSalahKetik={setSalahKetik}
-            setFocusDiv={setFocusDiv}
+            salahKetikKelebihan={salahKetikKelebihan}
             setSalahKetikKelebihan={setSalahKetikKelebihan}
-            setTimer={setTimer}
-            setStatsOverTime={setStatsOverTime}
-            setSalahKetikSemuaCount={setSalahKetikSemuaCount}
-            language={testSettings.language}
-            difficulty={testSettings.difficulty}
-            setText={setText}
-            restartType={"restart"}
-          />
-
-          <RestartButton
-            size={"5"}
-            setCursorPos={setCursorPos}
-            setFinish={setFinish}
-            setSalahKetik={setSalahKetik}
+            focusDiv={focusDiv}
             setFocusDiv={setFocusDiv}
-            setSalahKetikKelebihan={setSalahKetikKelebihan}
+            finish={finish}
+            timerSec={timerSec}
+            timer={timer}
             setTimer={setTimer}
-            setStatsOverTime={setStatsOverTime}
+            text={text}
+            ref={typingDivRef}
+            timeMode={testSettings.timeMode}
             setSalahKetikSemuaCount={setSalahKetikSemuaCount}
-            language={testSettings.language}
-            difficulty={testSettings.difficulty}
-            setText={setText}
-            restartType={"new test"}
-          />
-          <ChooseTime
-            testSettings={testSettings}
-            setTestSettings={setTestSettings}
-            timer={timer}
-          />
-        </div>
-
-        <TypingTestBox
-          cursorPos={cursorPos}
-          setCursorPos={setCursorPos}
-          salahKetik={salahKetik}
-          setSalahKetik={setSalahKetik}
-          salahKetikKelebihan={salahKetikKelebihan}
-          setSalahKetikKelebihan={setSalahKetikKelebihan}
-          focusDiv={focusDiv}
-          setFocusDiv={setFocusDiv}
-          finish={finish}
-          timerSec={timerSec}
-          timer={timer}
-          setTimer={setTimer}
-          text={text}
-          ref={typingDivRef}
-          timeMode={testSettings.timeMode}
-          setSalahKetikSemuaCount={setSalahKetikSemuaCount}
-          typingSound={testSettings.typingSound}
-        />
-
-        <div className="flex items-center mx-auto option-container-width mt-5 px-2 justify-between">
-          <ChooseLanguage
-            testSettings={testSettings}
-            setTestSettings={setTestSettings}
-            timer={timer}
+            typingSound={testSettings.typingSound}
           />
 
-          <ChooseDifficulty
-            testSettings={testSettings}
-            setTestSettings={setTestSettings}
-            timer={timer}
-          />
+          <div className="flex items-center mx-auto option-container-width mt-5 px-2 justify-between">
+            <ChooseLanguage
+              testSettings={testSettings}
+              setTestSettings={setTestSettings}
+              timer={timer}
+            />
+
+            <ChooseDifficulty
+              testSettings={testSettings}
+              setTestSettings={setTestSettings}
+              timer={timer}
+            />
+          </div>
+          <div className="flex justify-center">
+            <ChooseTypingSound
+              testSettings={testSettings}
+              setTestSettings={setTestSettings}
+              timer={timer}
+            />
+          </div>
         </div>
-        <div className="flex justify-center">
-          <ChooseTypingSound
-            testSettings={testSettings}
-            setTestSettings={setTestSettings}
-            timer={timer}
-          />
-        </div>
-      </div>
+      </Motion>
     </div>
   );
 }

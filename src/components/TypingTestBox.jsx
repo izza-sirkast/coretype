@@ -195,7 +195,7 @@ const TypingTestBox = React.forwardRef((props, ref) => {
       tabIndex="0"
       onKeyDown={handleType}
       onClick={handleClick}
-      className="overflow-hidden overflow-y-hidden outline-none rounded-2xl px-8 py-4 select-none bg-slate-300 bg-opacity-10  mx-auto testcontainer-length"
+      className="overflow-hidden overflow-y-hidden outline-none rounded-2xl px-8 py-4 select-none mx-auto testcontainer-length bg-white bg-opacity-10 backdrop-blur-lg shadow-lg rounded-lg"
     >
       <p className="text-2xl text-white text-justify w-fit">{progressText}</p>
     </div>

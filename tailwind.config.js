@@ -4,7 +4,7 @@ module.exports = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/library/**/*.{js,ts,jsx,tsx,mdx}"
+    "./src/library/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
@@ -14,15 +14,15 @@ module.exports = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       animation: {
-        'pulsate': 'pulsate 1s infinite',
+        pulsate: "pulsate 1s infinite",
       },
       keyframes: {
-        'pulsate': {
-          '0%, 100%': { opacity: 1 },
-          '50%': { opacity: 0 },
+        pulsate: {
+          "0%, 100%": { opacity: 1 },
+          "50%": { opacity: 0 },
         },
-      }
+      },
     },
   },
-  plugins: [],
+  plugins: [require("rippleui")],
 };
