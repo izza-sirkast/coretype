@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { SlCursor } from "react-icons/sl";
+import Image from "next/image";
 import { Motion } from "@/components/transition/motion";
 import Modal from "@/components/modal/modal";
 
@@ -11,11 +11,13 @@ function HomePage() {
         <Motion>
           <div className="flex flex-col justify-center items-center w-auto h-5/6">
             <div className="flex items-start mb-7">
-              <SlCursor className="text-light-blue text-5xl mr-2 mt-1" />
-              <div className="flex flex-col items-end cursor-default">
-                <p className="text-3xl text-white">CoreType</p>
-                <p className="text-light-blue text-sm">Typing Test</p>
-              </div>
+              <Image
+                src="/CoreType.svg"
+                width={200}
+                height={200}
+                alt="CoreType Logo"
+                className="mr-2"
+              />
             </div>
 
             <Link

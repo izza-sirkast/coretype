@@ -1,13 +1,13 @@
 # CoreType Typing Test
 
-## Deskripsi
+![CoreType Logo](public/CoreType.svg)
 
-Website ini adalah aplikasi tes mengetik yang memungkinkan pengguna untuk menguji kecepatan mengetik mereka dalam dua bahasa: Indonesia dan Inggris. Pengguna juga dapat memilih tingkat kesulitan (mudah, sedang, sulit) dan mengganti suara ketikan dengan enam pilihan suara yang berbeda.
+Website ini adalah aplikasi typing test yang memungkinkan pengguna untuk menguji kecepatan mengetik mereka dalam dua bahasa: Indonesia dan Inggris. Pengguna juga dapat memilih tingkat kesulitan (easy, medium, hard) dan mengganti suara ketikan dengan enam pilihan suara yang berbeda.
 
 ## Fitur
 
 - **Dua Bahasa**: Indonesia dan Inggris
-- **Tingkat Kesulitan**: Mudah, Sedang, Sulit
+- **Tingkat Kesulitan**: Easy, Medium, Hard
 - **Suara Ketikan**: 6 pilihan suara yang berbeda
 
 ## Instalasi

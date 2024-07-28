@@ -1,7 +1,11 @@
-import { Poppins } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import Head from "next/head";
 import NextTopLoader from "nextjs-toploader";
+
+const inter = Inter({
+  subsets: ["latin"],
+});
 
 export const metadata = {
   title: "coretype",
@@ -12,10 +16,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <Head>
-        <link rel="icon" href="/icon/png" type="image/png" sizes="any" />
+        <link rel="icon" href="/icon.png" type="image/png" sizes="any" />
       </Head>
-      {/* <body className={poppins.className}> */}
-      <body>
+      <body className={inter.className}>
         <div className="max-h-screen overflow-hidden">
           <NextTopLoader
             color="#126bf9"

@@ -1,16 +1,18 @@
 import React from "react";
-import { SlCursor } from "react-icons/sl";
+import Image from "next/image";
 import Link from "next/link";
 
 function NavBar() {
   return (
     <nav className="sticky flex top-0 mx-auto justify-between w-4/5 items-start pt-4">
       <div className="flex items-start">
-        <SlCursor className="text-light-blue text-4xl mr-2 mt-2" />
-        <div className="flex flex-col items-end">
-          <p className="text-xl text-white mt-1">CoreType</p>
-          <p className="text-light-blue text-xs">Typing Test</p>
-        </div>
+        <Image
+          src="/CoreType.svg"
+          width={150}
+          height={150}
+          alt="CoreType Logo"
+          className="mr-2"
+        />
       </div>
 
       <Link
