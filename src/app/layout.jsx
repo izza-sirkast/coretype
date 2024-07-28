@@ -3,11 +3,6 @@ import "./globals.css";
 import Head from "next/head";
 import NextTopLoader from "nextjs-toploader";
 
-// const poppins = Poppins({
-//   subsets: ["latin"],
-//   variable: "--font-poppins",
-// });
-
 export const metadata = {
   title: "coretype",
   description: "Typing test app",
